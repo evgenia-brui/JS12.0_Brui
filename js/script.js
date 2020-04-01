@@ -1,4 +1,4 @@
-const money = +prompt('Ваш месячный доход?', 500), // любое число “Доход за месяц”
+let money = +prompt('Ваш месячный доход?', 500), // любое число “Доход за месяц”
     income = '5', // строка с дополнительными доходом (например: фриланс)
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'бензин, подарки'), // строка (интернет, такси, коммуналка)
     deposit = confirm('Есть ли у вас депозит в банке?'), // любое булево значение
@@ -7,7 +7,12 @@ const money = +prompt('Ваш месячный доход?', 500), // любое
     expenses2 = prompt('Введите обязательную статью расходов', 'коммуналка'),
     amount2 = +prompt('Во сколько это обойдется?', 70),
     mission = 4000, // любое число (Какую сумму хотите накопить)
-    period = 12;
+    period = 12,
+    expensesMonth,
+    accumulatedMonth,
+    targetMonth,
+    budgetDay,
+    statusIncome;
 
 // Возвращает сумму всех обязательных расходов за месяц
 const getExpensesMonth = amounts => amounts.reduce((amount, sum) => amount + sum, 0);
@@ -37,11 +42,11 @@ const getStatusIncome = budgetDay => {
 // Выводит в консоль тип переменной
 const showTypeOf = variable => console.log(variable, typeof variable);
 
-const expensesMonth = getExpensesMonth([amount1, amount2]);
-const accumulatedMonth = getAccumulatedMonth(money, income, expensesMonth);
-const targetMonth = getTargetMonth(mission, accumulatedMonth);
-const budgetDay = getBudgetDay(accumulatedMonth);
-const statusIncome = getStatusIncome(budgetDay);
+expensesMonth = getExpensesMonth([amount1, amount2]);
+accumulatedMonth = getAccumulatedMonth(money, income, expensesMonth);
+targetMonth = getTargetMonth(mission, accumulatedMonth);
+budgetDay = getBudgetDay(accumulatedMonth);
+statusIncome = getStatusIncome(budgetDay);
 
 showTypeOf(money);
 showTypeOf(income);
