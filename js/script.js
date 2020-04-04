@@ -69,4 +69,7 @@ appData.getBudget();
 console.log('Расходы за месяц: ' + appData.expensesMonth);
 console.log(appData.getTargetMonth() < 0 ? 'Цель не будет достигнута' : `Цель будет достигнута за ${appData.getTargetMonth()} мес`);
 console.log(appData.getStatusIncome());
-console.log(appData);
+console.log('Наша программа включает в себя данные:');
+for (let property in appData) {
+    console.log(property + ': ' + appData[property]);
+}
