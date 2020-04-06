@@ -32,7 +32,7 @@ let appData = {
             let itemIncome, cashIncome;
             do {
                 itemIncome = prompt('Какой у вас дополнительные заработок?', 'Фриланс');
-            } while (isEmpty(itemIncome));
+            } while (isEmpty(itemIncome) || isNumber(itemIncome));
             do {
                 cashIncome = +prompt('Сколько в месяц вы на этом зарабатываете?', 150);
             } while (!isNumber(cashIncome));
@@ -42,7 +42,7 @@ let appData = {
             let expensText, expensValue;
             do {
                 expensText = prompt('Введите обязательную статью расходов', 'интернет');
-            } while (isEmpty(expensText));
+            } while (isEmpty(expensText) || isNumber(expensText));
             do {
                 expensValue = +prompt('Во сколько это обойдется?', 35);
             } while (!isNumber(expensValue));
@@ -82,7 +82,7 @@ let appData = {
             } while (!isNumber(appData.percentDeposit));
             do {
                 appData.moneyDeposit = +prompt('Какая сумма заложена?', 10000);
-            } while (!isNumber(moneyDeposit));
+            } while (!isNumber(appData.moneyDeposit));
         }
     },
     calcSavedMoney: () => appData.budgetMonth * appData.period
