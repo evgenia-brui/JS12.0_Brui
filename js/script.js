@@ -91,6 +91,7 @@ let appData = {
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
+appData.getInfoDeposit();
 
 console.log('Расходы за месяц: ' + appData.expensesMonth);
 console.log(appData.getTargetMonth() < 0 ? 'Цель не будет достигнута' : `Цель будет достигнута за ${appData.getTargetMonth()} мес`);
