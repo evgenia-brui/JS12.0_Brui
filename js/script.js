@@ -3,7 +3,7 @@
 const salaryAmount = document.querySelector('.salary-amount'),
       incomeTitle = document.querySelector('.income-title'),
       incomeAmount = document.querySelector('.income-amount'),
-      btnPlus = document.getElementsByTagName('btn_plus'),
+      btnPlus = document.getElementsByTagName('button'),
       btnPlusIncome = document.querySelector('button.income_add'),
       additionalIncomes = document.querySelectorAll('.additional_income-item'),
       expensesTitle = document.querySelector('.expenses-title'),
