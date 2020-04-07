@@ -49,7 +49,7 @@ let appData = {
             appData.expenses[expensText] = expensValue;
         }
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'бензин, подарки'); // строка (интернет, такси, коммуналка)
-        appData.addExpenses = addExpenses.toLowerCase().split(', ');
+        appData.addExpenses = addExpenses.toLowerCase().split(', ').map(expens => expens.trim());
         appData.deposit = confirm('Есть ли у вас депозит в банке?'); // любое булево значение
     },
     // Возвращает сумму всех обязательных расходов за месяц
