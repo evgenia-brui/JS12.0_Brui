@@ -3,23 +3,22 @@
 const salaryAmount = document.querySelector('.salary-amount'),
       incomeTitle = document.querySelector('.income-title'),
       incomeAmount = document.querySelector('.income-amount'),
-      btnPlus = document.getElementsByTagName('button'),
-      btnPlusIncome = document.querySelector('button.income_add'),
+      btnPlusIncome = document.getElementsByTagName('button')[0],
       additionalIncomes = document.querySelectorAll('.additional_income-item'),
       expensesTitle = document.querySelector('.expenses-title'),
       expensesAmount = document.querySelector('.expenses-amount'),
-      btnPlusExpenses = document.querySelector('button.expenses_add'),
+      btnPlusExpenses = document.getElementsByTagName('button')[1],
       additionalExpensesItems = document.querySelector('.additional_expenses-item'),
       checkboxDeposit = document.querySelector('#deposit-check'),
       targetAmount = document.querySelector('.target-amount'),
       periodSelect = document.querySelector('.period-select'),
       budgetMonth = document.querySelector('.budget_month-value'),
-      budgetDay = document.querySelector('.budget_day-value'),
-      expensesMonth = document.querySelector('.expenses_month-value'),
-      additionalIncome = document.querySelector('.additional_income-value'),
-      additionalExpenses = document.querySelector('.additional_expenses-value'),
-      incomePeriod = document.querySelector('.income_period-value'),
-      targetMonth = document.querySelector('.target_month-value'),
+      budgetDay = document.getElementsByClassName('budget_day-value'),
+      expensesMonth = document.getElementsByClassName('expenses_month-value'),
+      additionalIncome = document.getElementsByClassName('additional_income-value'),
+      additionalExpenses = document.getElementsByClassName('additional_expenses-value'),
+      incomePeriod = document.getElementsByClassName('income_period-value'),
+      targetMonth = document.getElementsByClassName('target_month-value'),
       btnCalculate = document.getElementById('start');
 
 // Проверка на число
@@ -73,7 +72,7 @@ let appData = {
             appData.expenses[expensText] = expensValue;
         }
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'бензин, подарки'); // строка (интернет, такси, коммуналка)
-        appData.addExpenses = addExpenses.toLowerCase().split(', ');
+        appData.addExpenses = addExpenses.toLowerCase().split(',').map(expens => expens.trim());
         appData.deposit = confirm('Есть ли у вас депозит в банке?'); // любое булево значение
     },
     // Возвращает сумму всех обязательных расходов за месяц
