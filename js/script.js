@@ -13,13 +13,15 @@ const salaryAmount = document.querySelector('.salary-amount'),
       targetAmount = document.querySelector('.target-amount'),
       periodSelect = document.querySelector('.period-select'),
       budgetMonth = document.querySelector('.budget_month-value'),
-      budgetDay = document.getElementsByClassName('budget_day-value'),
-      expensesMonth = document.getElementsByClassName('expenses_month-value'),
-      additionalIncome = document.getElementsByClassName('additional_income-value'),
-      additionalExpenses = document.getElementsByClassName('additional_expenses-value'),
-      incomePeriod = document.getElementsByClassName('income_period-value'),
-      targetMonth = document.getElementsByClassName('target_month-value'),
+      budgetDay = document.getElementsByClassName('budget_day-value')[0],
+      expensesMonth = document.getElementsByClassName('expenses_month-value')[0],
+      additionalIncome = document.getElementsByClassName('additional_income-value')[0],
+      additionalExpenses = document.getElementsByClassName('additional_expenses-value')[0],
+      incomePeriod = document.getElementsByClassName('income_period-value')[0],
+      targetMonth = document.getElementsByClassName('target_month-value')[0],
       btnCalculate = document.getElementById('start');
+
+      console.log(budgetDay);
 
 // Проверка на число
 const isNumber = n => !isNaN(parseFloat(n)) && isFinite(n) && n != 0;
