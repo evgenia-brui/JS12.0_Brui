@@ -24,7 +24,8 @@ let calcForm = document.querySelector('.calc'),
     periodAmount = document.querySelector('.period-amount'),
     inputName = document.querySelectorAll('[placeholder="Наименование"]'),
     inputSum = document.querySelectorAll('[placeholder="Сумма"]'),
-    btnCalculate = document.getElementById('start');
+    btnCalculate = document.getElementById('start'),
+    btnCancel = document.getElementById('cancel');
 
 // Проверка на число
 const isNumber = n => !isNaN(parseFloat(n)) && isFinite(n) && n != 0;
@@ -56,10 +57,40 @@ let appData = {
         this.getInfoDeposit();
         this.showResult();
 
-        periodSelect.addEventListener('input', appData.showResult);
+        const dataInputText = calcForm.querySelectorAll('.data input[type="text"]');
+        const dataInputTextArray = Array.prototype.slice.call(dataInputText);
+        dataInputTextArray.forEach(function (input) {
+            input.setAttribute('readonly', true);
+        });
+        btnCalculate.style.display = 'none';
+        btnCancel.style.display = 'block';
+
+        periodSelect.addEventListener('input', this.showResult.bind(appData));
+    },
+    reset: function() {
+        const calcFormInputs = calcForm.querySelectorAll('input');
+        const calcFormInputsArray = Array.prototype.slice.call(calcFormInputs);
+        calcFormInputsArray.forEach(function (input) {
+            input.value = '';
+            input.removeAttribute('readonly');
+        });
+        btnCalculate.style.display = 'block';
+        btnCancel.style.display = 'none';
+        btnCalculate.disabled = true;
+        this.budget = 0;
+        this.budgetDay = 0;
+        this.budgetMonth = 0;
+        this.expensesMonth = 0;
+        this.income = {};
+        this.incomeMonth = 0;
+        this.addIncome = [];
+        this.expenses = {};
+        this.addExpenses = [];
+        this.deposit = false;
+        this.percentDeposit = 0;
+        this.moneyDeposit = 0;
     },
     showResult: function() {
-        console.log(this);
         budgetMonth.value = this.budgetMonth;
         budgetDay.value = Math.floor(this.budgetDay);
         expensesMonth.value = this.expensesMonth;
@@ -93,12 +124,10 @@ let appData = {
         inputSum = document.querySelectorAll('[placeholder="Сумма"]');
     },
     getExpenses: function() {
-        console.log(this);
         expensesItems.forEach((item) => {
             let itemExpenses = item.querySelector('.expenses-title').value;
             let cashExpenses = item.querySelector('.expenses-amount').value;
             if (itemExpenses !== '' && cashExpenses !== '') {
-                console.log(this);
                 this.expenses[itemExpenses] = +cashExpenses;
             }
         });
@@ -189,6 +218,7 @@ salaryAmount.addEventListener('input', function () {
     btnCalculate.disabled = salaryAmount.value != '' ? false : true;
 });
 btnCalculate.addEventListener('click', appData.start.bind(appData));
+btnCancel.addEventListener('click', appData.reset.bind(appData));
 btnPlusExpenses.addEventListener('click', appData.addExpensesBlock);
 btnPlusIncome.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.selectPeriod);
