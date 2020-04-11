@@ -177,7 +177,7 @@ let appData = {
 
 btnCalculate.disabled = true;
 salaryAmount.addEventListener('input', function () {
-    btnCalculate.disabled = false;
+    btnCalculate.disabled = salaryAmount.value != '' ? false : true;
 });
 btnCalculate.addEventListener('click', appData.start);
 btnPlusExpenses.addEventListener('click', appData.addExpensesBlock);
