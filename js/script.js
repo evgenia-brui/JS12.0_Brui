@@ -121,7 +121,7 @@ class AppData {
         incomePeriod.value = this.calcPeriod();
     }
     addExpensesBlock() {
-        let cloneExpensesItem = expensesItems[0].cloneNode(true);
+        const cloneExpensesItem = expensesItems[0].cloneNode(true);
         cloneExpensesItem.querySelectorAll('input')[0].value = '';
         cloneExpensesItem.querySelectorAll('input')[1].value = '';
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, btnPlusExpenses);
@@ -133,7 +133,7 @@ class AppData {
         inputSum = document.querySelectorAll('[placeholder="Сумма"]');
     }
     addIncomeBlock() {
-        let cloneIncomeItem = incomeItem[0].cloneNode(true);
+        const cloneIncomeItem = incomeItem[0].cloneNode(true);
         cloneIncomeItem.querySelectorAll('input')[0].value = '';
         cloneIncomeItem.querySelectorAll('input')[1].value = '';
         incomeItem[0].parentNode.insertBefore(cloneIncomeItem, btnPlusIncome);
@@ -146,8 +146,8 @@ class AppData {
     }
     getExpenses() {
         expensesItems.forEach((item) => {
-            let itemExpenses = item.querySelector('.expenses-title').value;
-            let cashExpenses = item.querySelector('.expenses-amount').value;
+            const itemExpenses = item.querySelector('.expenses-title').value;
+            const cashExpenses = item.querySelector('.expenses-amount').value;
             if (itemExpenses !== '' && cashExpenses !== '') {
                 this.expenses[itemExpenses] = +cashExpenses;
             }
@@ -155,19 +155,19 @@ class AppData {
     }
     getIncome() {
         incomeItem.forEach((item) => {
-            let itemIncome = item.querySelector('.income-title').value;
-            let cashIncome = item.querySelector('.income-amount').value;
+            const itemIncome = item.querySelector('.income-title').value;
+            const cashIncome = item.querySelector('.income-amount').value;
             if (itemIncome !== '' && cashIncome !== '') {
                 this.income[itemIncome] = cashIncome;
             }
         });
     
-        for (let key in this.income) {
+        for (const key in this.income) {
             this.incomeMonth += +this.income[key];
         }
     }
     getAddExpenses() {
-        let addExpenses = additionalExpensesItems.value.split(',');
+        const addExpenses = additionalExpensesItems.value.split(',');
         addExpenses.forEach((item) => {
             if (!isEmpty(item)) {
                 this.addExpenses.push(item.trim());
@@ -176,7 +176,7 @@ class AppData {
     }
     getAddIncome() {
         additionalIncomes.forEach((item) => {
-            let itemValue = item.value.trim();
+            const itemValue = item.value.trim();
             if (!isEmpty(itemValue)) {
                 this.addIncome.push(itemValue);
             }
