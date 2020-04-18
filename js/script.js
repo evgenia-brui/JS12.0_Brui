@@ -142,13 +142,12 @@ class AppData {
     getExpInc() {
         expensesItems = document.querySelectorAll('.expenses-items');
         incomeItems = document.querySelectorAll('.income-items');
-        
+
         const count = item => {
             const startStr = item.className.split('-')[0];
             const itemTitle = item.querySelector(`.${startStr}-title`).value;
             const itemAmount = item.querySelector(`.${startStr}-amount`).value;
             if (itemTitle !== '' && itemAmount !== '') {
-                console.log(itemAmount);
                 this[startStr][itemTitle] = +itemAmount;
             }
         };
@@ -237,7 +236,7 @@ class AppData {
         btnPlusExpenses.addEventListener('click', _this.addExpIncBlock);
         btnPlusIncome.addEventListener('click', _this.addExpIncBlock);
         periodSelect.addEventListener('input', _this.selectPeriod);
-        //calcForm.addEventListener('input', _this.validate);
+        calcForm.addEventListener('input', _this.validate);
     }
 };
 
