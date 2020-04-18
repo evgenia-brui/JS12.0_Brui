@@ -4,7 +4,7 @@ const calcForm = document.querySelector('.calc'),
     salaryAmount = document.querySelector('.salary-amount'),
     incomeTitle = document.querySelector('.income-title'),
     incomeAmount = document.querySelector('.income-amount'),
-    incomeBtnPlus = document.getElementsByTagName('button')[0],
+    btnPlusIncome = document.getElementsByTagName('button')[0],
     additionalIncomes = document.querySelectorAll('.additional_income-item'),
     expensesTitle = document.querySelector('.expenses-title'),
     btnPlusExpenses = document.getElementsByTagName('button')[1],
@@ -82,7 +82,7 @@ class AppData {
         btnCancel.style.display = 'none';
         btnCalculate.disabled = true;
         btnPlusExpenses.style.display = 'block';
-        incomeBtnPlus.style.display = 'block';
+        btnPlusIncome.style.display = 'block';
         expensesItems = document.querySelectorAll('.expenses-items');
         expensesItems.forEach((item, key) => {
             if (key !== 0) {
@@ -119,32 +119,6 @@ class AppData {
         targetMonth.value = this.getTargetMonth();
         incomePeriod.value = this.calcPeriod();
     }
-    /*
-    addExpensesBlock() {
-        const cloneExpensesItem = expensesItems[0].cloneNode(true);
-        cloneExpensesItem.querySelectorAll('input')[0].value = '';
-        cloneExpensesItem.querySelectorAll('input')[1].value = '';
-        expensesItems[0].parentNode.insertBefore(cloneExpensesItem, btnPlusExpenses);
-        expensesItems = document.querySelectorAll('.expenses-items');
-        if (expensesItems.length === 3) {
-            btnPlusExpenses.style.display = 'none';
-        }
-        inputName = document.querySelectorAll('[placeholder="Наименование"]');
-        inputSum = document.querySelectorAll('[placeholder="Сумма"]');
-    }
-    addIncomeBlock() {
-        const cloneIncomeItem = incomeItem[0].cloneNode(true);
-        cloneIncomeItem.querySelectorAll('input')[0].value = '';
-        cloneIncomeItem.querySelectorAll('input')[1].value = '';
-        incomeItem[0].parentNode.insertBefore(cloneIncomeItem, btnPlusIncome);
-        incomeItem = document.querySelectorAll('.income-items');
-        if (incomeItem.length === 3) {
-            btnPlusIncome.style.display = 'none';
-        }
-        inputName = document.querySelectorAll('[placeholder="Наименование"]');
-        inputSum = document.querySelectorAll('[placeholder="Сумма"]');
-    }
-    */
     addExpIncBlock() {
         let classElem = 'income';
         this.className.split(' ').map((item) => {
@@ -152,25 +126,29 @@ class AppData {
                 classElem = item.split('_')[0];
             }
         });
-        //console.log(classElem);
-
-        const cloneItem = incomeItems[0].cloneNode(true);
-        //cloneItem.querySelectorAll('input')[0].value = '';
-        //cloneItem.querySelectorAll('input')[1].value = '';
-        incomeItems[0].parentNode.insertBefore(cloneItem, incomeBtnPlus);
-        incomeItems = document.querySelectorAll(`.${classElem}-items`);
-        if (incomeItems.length === 3) {
-            incomeBtnPlus.style.display = 'none';
+        let items = classElem === 'income' ? incomeItems : expensesItems;
+        let btn = classElem === 'income' ? btnPlusIncome : btnPlusExpenses;
+        const cloneItem = items[0].cloneNode(true);
+        cloneItem.querySelectorAll('input')[0].value = '';
+        cloneItem.querySelectorAll('input')[1].value = '';
+        items[0].parentNode.insertBefore(cloneItem, btn);
+        items = document.querySelectorAll(`.${classElem}-items`);
+        if (items.length === 3) {
+            btn.style.display = 'none';
         }
         inputName = document.querySelectorAll('[placeholder="Наименование"]');
         inputSum = document.querySelectorAll('[placeholder="Сумма"]');
     }
     getExpInc() {
+        expensesItems = document.querySelectorAll('.expenses-items');
+        incomeItems = document.querySelectorAll('.income-items');
+        
         const count = item => {
             const startStr = item.className.split('-')[0];
             const itemTitle = item.querySelector(`.${startStr}-title`).value;
             const itemAmount = item.querySelector(`.${startStr}-amount`).value;
             if (itemTitle !== '' && itemAmount !== '') {
+                console.log(itemAmount);
                 this[startStr][itemTitle] = +itemAmount;
             }
         };
@@ -257,9 +235,9 @@ class AppData {
         btnCalculate.addEventListener('click', _this.start.bind(_this));
         btnCancel.addEventListener('click', _this.reset.bind(_this));
         btnPlusExpenses.addEventListener('click', _this.addExpIncBlock);
-        incomeBtnPlus.addEventListener('click', _this.addExpIncBlock);
+        btnPlusIncome.addEventListener('click', _this.addExpIncBlock);
         periodSelect.addEventListener('input', _this.selectPeriod);
-        calcForm.addEventListener('input', _this.validate);
+        //calcForm.addEventListener('input', _this.validate);
     }
 };
 
