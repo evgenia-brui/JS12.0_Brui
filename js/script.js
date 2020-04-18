@@ -182,8 +182,6 @@ class AppData {
             this.incomeMonth += +this.income[key];
         }
     }
-
-    // Это монстр, а не универсальный метод
     getAddExpInc(elem, type) {
         const count = (item) => {
             let itemValue = '';
@@ -200,24 +198,6 @@ class AppData {
             additionalExpenses.forEach(count);
         }
     }
-    /*
-    getAddExpenses() {
-        const addExpenses = additionalExpensesItems.value.split(',');
-        addExpenses.forEach((item) => {
-            if (!isEmpty(item)) {
-                this.addExpenses.push(item.trim());
-            }
-        });
-    }
-    getAddIncome() {
-        additionalIncomes.forEach((item) => {
-            const itemValue = item.value.trim();
-            if (!isEmpty(itemValue)) {
-                this.addIncome.push(itemValue);
-            }
-        });
-    }
-    */
     // Возвращает сумму всех обязательных расходов за месяц
     getExpensesMonth() {
         this.expensesMonth = Object.values(this.expenses).reduce((amount, sum) => amount + sum, 0);
