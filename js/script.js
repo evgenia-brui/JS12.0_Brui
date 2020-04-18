@@ -50,6 +50,7 @@ class AppData {
     }
 
     start() {
+        console.log('start');
         const _this = this;
         this.budget = +salaryAmount.value;
     
@@ -71,8 +72,12 @@ class AppData {
         btnCancel.style.display = 'block';
     
         periodSelect.addEventListener('input', _this.showResult.bind(_this));
+        btnPlusExpenses.removeEventListener('click', _this.addExpensesBlock);
+        btnPlusIncome.removeEventListener('click', _this.addIncomeBlock);
     }
     reset() {
+        console.log('reset');
+        const _this = this;
         const calcFormInputs = calcForm.querySelectorAll('input');
         const calcFormInputsArray = Array.prototype.slice.call(calcFormInputs);
         calcFormInputsArray.forEach((input) => {
@@ -84,6 +89,8 @@ class AppData {
         btnCalculate.disabled = true;
         btnPlusExpenses.style.display = 'block';
         btnPlusIncome.style.display = 'block';
+        btnPlusExpenses.addEventListener('click', _this.addExpensesBlock);
+        btnPlusIncome.addEventListener('click', _this.addIncomeBlock);
         expensesItems = document.querySelectorAll('.expenses-items');
         expensesItems.forEach((item, key) => {
             if (key !== 0) {
@@ -98,6 +105,8 @@ class AppData {
         });
         periodSelect.value = 1;
         periodAmount.textContent = periodSelect.value;
+        //periodSelect.removeEventListener('input', _this.showResult.bind(_this));
+        periodSelect.removeEventListener('input', _this.showResult);
         this.budget = 0;
         this.budgetDay = 0;
         this.budgetMonth = 0;
@@ -112,6 +121,7 @@ class AppData {
         this.moneyDeposit = 0;
     }
     showResult() {
+        console.log('showResult');
         budgetMonth.value = this.budgetMonth;
         budgetDay.value = Math.floor(this.budgetDay);
         expensesMonth.value = this.expensesMonth;
@@ -121,6 +131,7 @@ class AppData {
         incomePeriod.value = this.calcPeriod();
     }
     addExpensesBlock() {
+        console.log('addExpensesBlock');
         const cloneExpensesItem = expensesItems[0].cloneNode(true);
         cloneExpensesItem.querySelectorAll('input')[0].value = '';
         cloneExpensesItem.querySelectorAll('input')[1].value = '';
@@ -133,6 +144,7 @@ class AppData {
         inputSum = document.querySelectorAll('[placeholder="Сумма"]');
     }
     addIncomeBlock() {
+        console.log('addIncomeBlock');
         const cloneIncomeItem = incomeItem[0].cloneNode(true);
         cloneIncomeItem.querySelectorAll('input')[0].value = '';
         cloneIncomeItem.querySelectorAll('input')[1].value = '';
@@ -145,6 +157,7 @@ class AppData {
         inputSum = document.querySelectorAll('[placeholder="Сумма"]');
     }
     getExpenses() {
+        console.log('getExpenses');
         expensesItems.forEach((item) => {
             const itemExpenses = item.querySelector('.expenses-title').value;
             const cashExpenses = item.querySelector('.expenses-amount').value;
@@ -154,6 +167,7 @@ class AppData {
         });
     }
     getIncome() {
+        console.log('getIncome');
         incomeItem.forEach((item) => {
             const itemIncome = item.querySelector('.income-title').value;
             const cashIncome = item.querySelector('.income-amount').value;
@@ -167,6 +181,7 @@ class AppData {
         }
     }
     getAddExpenses() {
+        console.log('getAddExpenses');
         const addExpenses = additionalExpensesItems.value.split(',');
         addExpenses.forEach((item) => {
             if (!isEmpty(item)) {
@@ -175,6 +190,7 @@ class AppData {
         });
     }
     getAddIncome() {
+        console.log('getAddIncome');
         additionalIncomes.forEach((item) => {
             const itemValue = item.value.trim();
             if (!isEmpty(itemValue)) {
@@ -233,6 +249,7 @@ class AppData {
         }
     }
     eventsListeners() {
+        console.log('eventsListeners');
         const _this = this;
         btnCalculate.disabled = true;
         salaryAmount.addEventListener('input', () => {
@@ -242,7 +259,7 @@ class AppData {
         btnCancel.addEventListener('click', _this.reset.bind(_this));
         btnPlusExpenses.addEventListener('click', _this.addExpensesBlock);
         btnPlusIncome.addEventListener('click', _this.addIncomeBlock);
-        periodSelect.addEventListener('input', _this.selectPeriod);
+        //periodSelect.addEventListener('input', _this.selectPeriod);
         calcForm.addEventListener('input', _this.validate);
     }
 };
