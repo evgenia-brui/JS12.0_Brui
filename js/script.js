@@ -50,6 +50,7 @@ class AppData {
     }
 
     start() {
+        console.log('start');
         const _this = this;
         this.budget = +salaryAmount.value;
     
@@ -70,8 +71,12 @@ class AppData {
         btnCancel.style.display = 'block';
     
         periodSelect.addEventListener('input', _this.showResult.bind(_this));
+        btnPlusExpenses.removeEventListener('click', _this.addExpensesBlock);
+        btnPlusIncome.removeEventListener('click', _this.addIncomeBlock);
     }
     reset() {
+        console.log('reset');
+        const _this = this;
         const calcFormInputs = calcForm.querySelectorAll('input');
         const calcFormInputsArray = Array.prototype.slice.call(calcFormInputs);
         calcFormInputsArray.forEach((input) => {
@@ -83,6 +88,8 @@ class AppData {
         btnCalculate.disabled = true;
         btnPlusExpenses.style.display = 'block';
         btnPlusIncome.style.display = 'block';
+        btnPlusExpenses.addEventListener('click', _this.addExpensesBlock);
+        btnPlusIncome.addEventListener('click', _this.addIncomeBlock);
         expensesItems = document.querySelectorAll('.expenses-items');
         expensesItems.forEach((item, key) => {
             if (key !== 0) {
@@ -97,6 +104,8 @@ class AppData {
         });
         periodSelect.value = 1;
         periodAmount.textContent = periodSelect.value;
+        //periodSelect.removeEventListener('input', _this.showResult.bind(_this));
+        periodSelect.removeEventListener('input', _this.showResult);
         this.budget = 0;
         this.budgetDay = 0;
         this.budgetMonth = 0;
@@ -111,6 +120,7 @@ class AppData {
         this.moneyDeposit = 0;
     }
     showResult() {
+        console.log('showResult');
         budgetMonth.value = this.budgetMonth;
         budgetDay.value = Math.floor(this.budgetDay);
         expensesMonth.value = this.expensesMonth;
@@ -226,6 +236,7 @@ class AppData {
         }
     }
     eventsListeners() {
+        console.log('eventsListeners');
         const _this = this;
         btnCalculate.disabled = true;
         salaryAmount.addEventListener('input', () => {
