@@ -47,6 +47,7 @@ class AppData {
         this.deposit = false;
         this.percentDeposit = 0;
         this.moneyDeposit = 0;
+        this.showResultBind = this.showResult.bind(this);
     }
 
     start() {
@@ -70,7 +71,7 @@ class AppData {
         btnCalculate.style.display = 'none';
         btnCancel.style.display = 'block';
     
-        periodSelect.addEventListener('input', _this.showResult.bind(_this));
+        periodSelect.addEventListener('input', _this.showResultBind);
         btnPlusExpenses.removeEventListener('click', _this.addExpIncBlock);
         btnPlusIncome.removeEventListener('click', _this.addExpIncBlock);
     }
@@ -104,8 +105,7 @@ class AppData {
         });
         periodSelect.value = 1;
         periodAmount.textContent = periodSelect.value;
-        //periodSelect.removeEventListener('input', _this.showResult.bind(_this));
-        periodSelect.removeEventListener('input', _this.showResult);
+        periodSelect.removeEventListener('input', _this.showResultBind);
         this.budget = 0;
         this.budgetDay = 0;
         this.budgetMonth = 0;
