@@ -71,8 +71,8 @@ class AppData {
         btnCancel.style.display = 'block';
     
         periodSelect.addEventListener('input', _this.showResult.bind(_this));
-        btnPlusExpenses.removeEventListener('click', _this.addExpensesBlock);
-        btnPlusIncome.removeEventListener('click', _this.addIncomeBlock);
+        btnPlusExpenses.removeEventListener('click', _this.addExpIncBlock);
+        btnPlusIncome.removeEventListener('click', _this.addExpIncBlock);
     }
     reset() {
         console.log('reset');
@@ -88,8 +88,8 @@ class AppData {
         btnCalculate.disabled = true;
         btnPlusExpenses.style.display = 'block';
         btnPlusIncome.style.display = 'block';
-        btnPlusExpenses.addEventListener('click', _this.addExpensesBlock);
-        btnPlusIncome.addEventListener('click', _this.addIncomeBlock);
+        btnPlusExpenses.addEventListener('click', _this.addExpIncBlock);
+        btnPlusIncome.addEventListener('click', _this.addExpIncBlock);
         expensesItems = document.querySelectorAll('.expenses-items');
         expensesItems.forEach((item, key) => {
             if (key !== 0) {
