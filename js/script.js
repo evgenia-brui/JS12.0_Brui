@@ -55,7 +55,7 @@ class AppData {
     
         this.getExpInc();
         this.getExpensesMonth();
-        this.getAddExpInc('addIncome');
+        this.getAddExpInc('addIncome', 'array');
         this.getAddExpInc('addExpenses');
         this.getBudget();
         this.getInfoDeposit();
@@ -184,20 +184,16 @@ class AppData {
     }
 
     // Это монстр, а не универсальный метод
-    getAddExpInc(type) {
+    getAddExpInc(elem, type) {
         const count = (item) => {
             let itemValue = '';
-            if (type === 'addIncome') {
-                itemValue = item.value.trim();
-            } else {
-                itemValue = item.trim();
-            }
+            itemValue = type === 'array' ? item.value.trim() : item.trim();
             if (!isEmpty(itemValue)) {
-                this[type].push(itemValue);
+                this[elem].push(itemValue);
             }
         };
 
-        if (type === 'addIncome') {
+        if (type === 'array') {
             additionalIncomes.forEach(count);
         } else {
             const additionalExpenses = additionalExpensesItems.value.split(',');
