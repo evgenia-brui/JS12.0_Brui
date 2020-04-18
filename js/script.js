@@ -231,7 +231,9 @@ class AppData {
         if (target.hasAttribute('placeholder') && target.getAttribute('placeholder') === 'Процент') {
             if (!isNumber(target.value) || target.value < 0 || target.value > 100) {
                 alert('Введите корректное значение в поле проценты');
-                target.value = target.value.slice(0, -1);
+                btnCalculate.disabled = true;
+            } else {
+                btnCalculate.disabled = false;
             }
         }
     }
