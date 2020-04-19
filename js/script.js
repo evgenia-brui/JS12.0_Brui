@@ -50,9 +50,62 @@ class AppData {
         this.deposit = false;
         this.percentDeposit = 0;
         this.moneyDeposit = 0;
-        this.showResultBind = this.showResult.bind(this);
     }
+    // Установлены ли куки и проверка на целостность кук
+    isCookie() {
+        let isLoad;
+        let allCookie = {};
+        document.cookie.split('; ').map((cookie) => {
+            allCookie[cookie.split('=')[0]] = cookie.split('=')[1];
+            if (cookie.split('=')[0] === 'isLoad') {
+                isLoad = cookie.split('=')[1];
+            }
+        });
+        // здесь проверим на соответсвие кук и localStorage
+        let keys = Object.keys(localStorage);
+        for (let key of keys) {
+            if (localStorage.getItem(key) != allCookie[key]) {
+                this.reset();
+                return false;
+            }
+        }
+        return isLoad ? true : false;
+    }
+    // Запишем куки и localStorage
+    setCookie() {
+        let date = new Date(Date.now() + 86400e3); // +1 день от текущей даты
+        date = date.toUTCString();
 
+        const resultInput = calcForm.querySelectorAll('.result input[type="text"]');
+        const resultInputArray = Array.prototype.slice.call(resultInput);
+        resultInputArray.forEach((input) => {
+            const name = input.className.split(' ')[1];
+            document.cookie = name + '=' + input.value + '; path=/; expires=' + date;
+            localStorage.setItem(name, input.value);
+        });
+
+        document.cookie = name + 'isLoad=true; path=/; expires=' + date;
+    }
+    // Достанем данные из кук
+    getCookie() {
+        document.cookie.split('; ').map((cookie) => {
+            if (cookie.split('=')[0] !== 'isLoad') {
+                document.querySelector('.' + cookie.split('=')[0]).value = cookie.split('=')[1];
+            }
+        });
+        this.lockForm();
+        periodSelect.disabled = true;
+    }
+    // Удаляем куки и localStorage
+    removeCookie() {
+        let date = new Date(Date.now()); // текущий момент, чтобы куки удалились
+        date = date.toUTCString();
+        document.cookie.split('; ').map((cookie) => {
+            document.cookie = cookie.split('=')[0] + '=' + cookie.split('=')[1] + '; path=/; expires=' + date;
+        });
+        localStorage.clear();
+    }
+    // Расчитаем все и заблокируем форму
     start() {
         console.log('start');
         const _this = this;
@@ -65,50 +118,32 @@ class AppData {
         this.getInfoDeposit();
         this.getBudget();
         this.showResult();
-    
-        const dataInputText = calcForm.querySelectorAll('.data input[type="text"]');
-        const dataInputTextArray = Array.prototype.slice.call(dataInputText);
-        dataInputTextArray.forEach((input) => {
-            input.setAttribute('readonly', true);
-        });
-        btnCalculate.style.display = 'none';
-        btnCancel.style.display = 'block';
-    
-        periodSelect.addEventListener('input', _this.showResultBind);
-        btnPlusExpenses.removeEventListener('click', _this.addExpIncBlock);
-        btnPlusIncome.removeEventListener('click', _this.addExpIncBlock);
+        this.setCookie();
+        this.lockForm();
+        periodSelect.disabled = false;
     }
+    // Сбрасываем форму до первоначального состояния
     reset() {
         console.log('reset');
         const _this = this;
-        const calcFormInputs = calcForm.querySelectorAll('input');
-        const calcFormInputsArray = Array.prototype.slice.call(calcFormInputs);
-        calcFormInputsArray.forEach((input) => {
-            input.value = '';
-            input.removeAttribute('readonly');
-        });
-        btnCalculate.style.display = 'block';
-        btnCancel.style.display = 'none';
-        btnCalculate.disabled = true;
+        this.unlockForm();
+        this.removeCookie();
         btnPlusExpenses.style.display = 'block';
         btnPlusIncome.style.display = 'block';
-        btnPlusExpenses.addEventListener('click', _this.addExpIncBlock);
-        btnPlusIncome.addEventListener('click', _this.addExpIncBlock);
+
         expensesItems = document.querySelectorAll('.expenses-items');
-        expensesItems.forEach((item, key) => {
-            if (key !== 0) {
-                item.remove();
-            }
-        });
         incomeItems = document.querySelectorAll('.income-items');
-        incomeItems.forEach((item, key) => {
+        const count = (item, key) => {
             if (key !== 0) {
                 item.remove();
             }
-        });
+        };
+        expensesItems.forEach(count);
+        incomeItems.forEach(count);
+
         periodSelect.value = 1;
         periodAmount.textContent = periodSelect.value;
-        periodSelect.removeEventListener('input', _this.showResultBind);
+        periodSelect.disabled = true;
         this.budget = 0;
         this.budgetDay = 0;
         this.budgetMonth = 0;
@@ -121,6 +156,45 @@ class AppData {
         this.deposit = false;
         this.percentDeposit = 0;
         this.moneyDeposit = 0;
+    }
+    // Блокируем форму
+    lockForm() {
+        const dataInputText = calcForm.querySelectorAll('.data input[type="text"]');
+        const dataInputTextArray = Array.prototype.slice.call(dataInputText);
+        dataInputTextArray.forEach((input) => {
+            input.setAttribute('disabled', true);
+        });
+
+        btnCalculate.style.display = 'none';
+        btnCancel.style.display = 'block';
+
+        btnPlusIncome.disabled = true;
+        btnPlusExpenses.disabled = true;
+        checkboxDeposit.disabled = true;
+    }
+    // Разблокируем форму
+    unlockForm() {
+        const dataInputText = calcForm.querySelectorAll('.data input');
+        const dataInputTextArray = Array.prototype.slice.call(dataInputText);
+        dataInputTextArray.forEach((input) => {
+            input.value = '';
+            input.removeAttribute('disabled');
+        });
+
+        const resultInputText = calcForm.querySelectorAll('.result input');
+        const resultInputTextArray = Array.prototype.slice.call(resultInputText);
+        resultInputTextArray.forEach((input) => {
+            input.value = '';
+        });
+
+        btnCalculate.style.display = 'block';
+        btnCancel.style.display = 'none';
+
+        btnCalculate.disabled = true;
+        btnPlusIncome.disabled = false;
+        btnPlusExpenses.disabled = false;
+        checkboxDeposit.disabled = false;
+        periodSelect.disabled = true;
     }
     showResult() {
         console.log('showResult');
@@ -276,14 +350,21 @@ class AppData {
         });
         btnCalculate.addEventListener('click', _this.start.bind(_this));
         btnCancel.addEventListener('click', _this.reset.bind(_this));
+        periodSelect.addEventListener('input', _this.selectPeriod);
+        periodSelect.addEventListener('input', _this.showResult.bind(_this));
+        periodSelect.disabled = true;
+        calcForm.addEventListener('input', _this.validate);
         btnPlusExpenses.addEventListener('click', _this.addExpIncBlock);
         btnPlusIncome.addEventListener('click', _this.addExpIncBlock);
         checkboxDeposit.addEventListener('change', _this.depositHandler.bind(_this));
-        periodSelect.addEventListener('input', _this.selectPeriod);
-        calcForm.addEventListener('input', _this.validate);
     }
 };
 
 const appData = new AppData();
 appData.eventsListeners();
+
+if (appData.isCookie()) {
+    appData.getCookie();
+}
+
 console.log(appData);
