@@ -309,10 +309,8 @@ class AppData {
             if (!isNumber(target.value) || target.value < 0 || target.value > 100) {
                 alert('Введите корректное значение в поле проценты');
                 btnCalculate.disabled = true;
-            } else {
-                if (salaryAmount.value != '') {
-                    btnCalculate.disabled = false;
-                }
+            } else if (salaryAmount.value != '') {
+                btnCalculate.disabled = false;
             }
         }
     }
