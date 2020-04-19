@@ -141,6 +141,9 @@ class AppData {
         expensesItems.forEach(count);
         incomeItems.forEach(count);
 
+        checkboxDeposit.checked = false;
+        this.depositHandler();
+
         periodSelect.value = 1;
         periodAmount.textContent = periodSelect.value;
         periodSelect.disabled = true;
@@ -307,7 +310,9 @@ class AppData {
                 alert('Введите корректное значение в поле проценты');
                 btnCalculate.disabled = true;
             } else {
-                btnCalculate.disabled = false;
+                if (salaryAmount.value != '') {
+                    btnCalculate.disabled = false;
+                }
             }
         }
     }
@@ -335,8 +340,10 @@ class AppData {
         } else {
             depositBank.style.display = 'none';
             depositAmount.style.display = 'none';
+            depositPercent.style.display = 'none';
             depositBank.value = '';
             depositAmount.value = '';
+            depositPercent.value = '';
             this.deposit = false;
             depositBank.removeEventListener('change', this.changePercent);
         }
